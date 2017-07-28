@@ -1,26 +1,26 @@
 
 
-var education = {
-
-    "schools": [
+var education = [
+    {
+    "schools":
       {
         "name": "University of California Riverside",
-        "city": "Riverside, CA",
+        "location": "Riverside, CA",
         "degree": "Bachelors",
         "major": "History",
-        "graduation": 2016
+        "dates": 2016
       }
-    ],
-
-    "online courses": [
+},{
+    "schools":
       {
-        "title": "Front-End Web Development",
-        "school": "Udacity",
+        "name": "Udacity",
+        "location": "Online",
+        "degree": "Front-End Web Development",
         "dates": 2017
       }
-    ],
+},{
 
-    "additional courses": [
+    "schools": [
       {
         "name": "Santa Monica College",
         "city": "Santa Monica, CA",
@@ -34,7 +34,7 @@ var education = {
         "date": ["February 2016", "June 2016"]
       }
     ]
-}
+}]
 
 var bio = {
 
@@ -67,33 +67,25 @@ var work = [
     }
 ]
 
-var project = {
-
+var projects = [
+    {
     "title": "Shopping Cart",
-    "date": 2016,
+    "date": "2016",
     "description": "This project was from my CS 80 course. It was a team project where we created a website for a mock t-shirt company. My main contribution was the shopping cart system. I used JavaScript and jQuery to create the ability to update the total quantity and cost of what was input into the shopping cart",
-    "image": "images/shoppingcart1.png"
-}
-
-// var HTMLheaderName = '<h1 id="name">bio.name</h1>';
-
-
-
-
-// if(document.getElementsByTagName(bio.skills).length === 0) {
-//     document.getElementById('header').style.display = 'none';
-
-// }
-
-// var HTMLskillsStart = '<h3 id="skills-h3">Skills at a Glance:</h3><ul id="skills" class="flex-box"></ul>';
-
-// $("#header").append(HTMLskillsStart);
+    "image": "images/shoppingcart2.jpg"
+    },
+    {
+    "title": "Trading Card",
+    "date": 2017,
+    "description": "A CSS project designing a trading card.",
+    "image": "images/tradingcard2.jpg"
+    }
+]
 
 
 
 $("#header").prepend(HTMLheaderRole.replace("%data%", bio.role));
 $("#header").prepend(HTMLheaderName.replace("%data%", bio.name));
-
 
 
 $("#topContacts").prepend(HTMLmobile.replace("%data%", bio.number));
@@ -105,25 +97,25 @@ $("#topContacts").append(HTMLlocation.replace("%data%", bio.location));
 $("#header").append(HTMLbioPic.replace("%data%", bio.pic));
 
 
-if(bio.skills.length > 0) {
+/------ Bio + display ------/
 
-    $("#header").append(HTMLskillsStart);
+bio.display = function() {
+    if(bio.skills.length > 0) {
 
-    var formattedSkill = HTMLskills.replace("%data%", bio.skills[0]);
-    $("#skills").append(formattedSkill);
-    formattedSkill = HTMLskills.replace("%data%", bio.skills[1]);
-    $("#skills").append(formattedSkill);
-    formattedSkill = HTMLskills.replace("%data%", bio.skills[2]);
-    $("#skills").append(formattedSkill);
-    formattedSkill = HTMLskills.replace("%data%", bio.skills[3]);
-    $("#skills").append(formattedSkill);
+        $("#header").append(HTMLskillsStart);
+
+        var formattedSkill = HTMLskills.replace("%data%", bio.skills[0]);
+        $("#skills").append(formattedSkill);
+        formattedSkill = HTMLskills.replace("%data%", bio.skills[1]);
+        $("#skills").append(formattedSkill);
+        formattedSkill = HTMLskills.replace("%data%", bio.skills[2]);
+        $("#skills").append(formattedSkill);
+        formattedSkill = HTMLskills.replace("%data%", bio.skills[3]);
+        $("#skills").append(formattedSkill);
 
 }
-
-
-$("#education").append(HTMLschoolStart);
-$("#education").append(HTMLschoolName.replace("%data%", education.schools[0].name));
-$("#education").append(HTMLschoolDegree.replace("%data%", education.schools[0].degree));
+}
+bio.display();
 
 
 /------ Displays Work Section ------/
@@ -158,6 +150,7 @@ function displayWork() {
 displayWork();
 
 
+/------ Click function ------/
 
 
 $(document).click(function(loc) {
@@ -203,18 +196,54 @@ $(document).ready(function() {
     });
 });
 
-/------ Projects ------/
+/------ Projects with Display ------/
 
-$("#projects").append(HTMLprojectStart);
 
-var formattedProject = HTMLprojectTitle.replace("%data%", project.title);
-$(".project-entry:last").append(formattedProject);
+projects.display = function() {
+    for (x in projects) {
+        $("#projects").append(HTMLprojectStart);
 
-var formattedProjectDates = HTMLprojectDates.replace("%data", project.date);
-$(".project-entry:last").append(formattedProjectDates);
+        var formattedProject = HTMLprojectTitle.replace("%data%", projects[x].title);
+        $(".project-entry:last").append(formattedProject);
 
-var formattedDates = HTMLprojectDescription.replace("%data%", project.description);
-$(".project-entry:last").append(formattedDates);
+        var formattedProjectDates = HTMLprojectDates.replace("%data%", projects[x].date);
+        $(".project-entry:last").append(formattedProjectDates);
 
-var formattedImage = HTMLprojectImage.replace("%data", project.images);
-$(".project-entry:last").append
+        var formattedDates = HTMLprojectDescription.replace("%data%", projects[x].description);
+        $(".project-entry:last").append(formattedDates);
+
+        var formattedImage = HTMLprojectImage.replace("%data%", projects[x].image);
+        $(".project-entry:last").append(formattedImage);
+
+ }}
+
+projects.display();
+
+/------ Education ------/
+
+education.display = function() {
+    for(a in education){
+        $("#education").append(HTMLschoolStart);
+
+        var formattedSchoolName = HTMLschoolName.replace("%data%", education[a].schools.name);
+        var formattedSchoolDegree = HTMLschoolDegree.replace("%data%", education[a].schools.degree);
+        var formattedSchoolNameDegree = formattedSchoolName + formattedSchoolDegree;
+
+        $(".education-entry:last").append(formattedSchoolNameDegree);
+
+        var formattedSchoolDates = HTMLschoolDates.replace("%data%", education[a].schools.dates);
+        $(".education-entry:last").append(formattedSchoolDates);
+
+        var formattedSchoolLocation = HTMLschoolLocation.replace("%data%", education[a].schools.location);
+        $(".education-entry:last").append(formattedSchoolLocation);
+
+        var formattedSchoolMajor = HTMLschoolMajor.replace("%data%", education[a].schools.major);
+        $(".education-entry:last").append(formattedSchoolMajor);
+}
+}
+
+education.display();
+
+
+
+/------ Google Map ------/
